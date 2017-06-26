@@ -262,3 +262,15 @@ def parse_timeout(timeout):
                                          'such as "1h", "23m".')
 
     return timeout
+  
+
+def safe_unicode(obj, *args):
+    """ return the unicode representation of obj, unicode handling for python2
+        to avoid UnicodeDecodeError
+    """
+    try:
+        return unicode(obj, *args)
+    except UnicodeDecodeError:
+        # obj is byte string
+        ascii_text = str(obj).encode('string_escape')
+        return unicode(ascii_text)
